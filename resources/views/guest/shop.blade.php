@@ -38,8 +38,8 @@
   </div>
   <div id="main-section">
     <div class="container py-5">
-      <div class="row justify-content-center">
-        <div class="col-sm-6">
+      <div class="row justify-content-center mb-4">
+        <div class="col-sm-8">
           <form action="">
             @csrf
             <div class="row">
@@ -58,15 +58,21 @@
           </form>
         </div>
       </div>
-      <div class="card-columns">
+      <div class="row row-cols-1 row-cols-md-3">
         @if($products->count() > 0)
           @foreach($products as $product)
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">{{ $product->name }}</h5>
-                @if($product->description != null)
-                  <p>{{ $product->description }}</p>
-                @endif
+            <div class="col px-1 mb-2">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title m-0">{{ $product->name }}</h5>
+                  <h4 class="text-success mt-auto mb-0">&#8369; {{ number_format(($product->discounted_price != null ? $product->discounted_price : $product->price), 2) }}</h4>
+                  @if($product->discounted_price != null)
+                    <h6 class="m-0">
+                      <s class="text-muted">&#8369; {{ number_format($product->price, 2) }}</s>
+                      <span class="ml-2">{{ $product->discount }}%</span>
+                    </h6>
+                  @endif
+                </div>
               </div>
             </div>
           @endforeach
