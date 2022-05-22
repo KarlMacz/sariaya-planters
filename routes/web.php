@@ -25,5 +25,6 @@ Route::name('auth.')->group(function() {
 Route::name('guest.')->group(function() {
     Route::get('/', 'GuestController@showIndex')->name('index');
     Route::get('shop', 'GuestController@showShop')->name('shop');
+    Route::get('product/{id}', 'GuestController@showProduct')->name('product');
     Route::get('test', 'GuestController@showTest');
 });

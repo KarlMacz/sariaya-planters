@@ -58,11 +58,11 @@
           </form>
         </div>
       </div>
-      <div class="row row-cols-1 row-cols-md-3">
+      <div class="row row-cols-1 row-cols-md-4">
         @if($products->count() > 0)
           @foreach($products as $product)
             <div class="col px-1 mb-2">
-              <div class="card h-100">
+              <a href="{{ route('guest.product', ['id' => base64_encode($product->id)]) }}" class="card h-100">
                 <div class="card-body">
                   <h5 class="card-title m-0">{{ $product->name }}</h5>
                   <h4 class="text-success mt-auto mb-0">&#8369; {{ number_format(($product->discounted_price != null ? $product->discounted_price : $product->price), 2) }}</h4>
@@ -73,7 +73,7 @@
                     </h6>
                   @endif
                 </div>
-              </div>
+              </a>
             </div>
           @endforeach
         @endif

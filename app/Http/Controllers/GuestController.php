@@ -24,6 +24,19 @@ class GuestController extends Controller
         ]);
     }
 
+    public function showProduct($id)
+    {
+        $id = base64_decode($id);
+
+        $product = Product::where('is_displayed', true)
+            ->where('id', $id)
+            ->first();
+
+        return view('guest.product', [
+            'product' => $product
+        ]);
+    }
+
     public function showTest()
     {
         //
