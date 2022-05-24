@@ -15,30 +15,30 @@
         <div class="card-body">
           <div class="row">
             <div class="col-sm-4">
-              <!-- Product Image Carousel -->  
-              <div id="banner" class="carousel slide" data-ride="carousel">
+              <!-- Product Image Carousel -->
+              <div id="product-carousel" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                   <div class="carousel-item active">
                     <div class="d-flex align-items-center h-100 w-100">
-                      <img class="d-block w-100" src="assets/img/product_Carousel_Temp1.jpg" alt="First slide">
+                      <img class="d-block w-100" src="{{ asset('assets/img/product_Carousel_Temp1.jpg') }}" alt="First slide">
                     </div>
                   </div>
                   <div class="carousel-item">
                     <div class="d-flex align-items-center h-100 w-100">
-                      <img class="d-block w-100" src="assets/img/product_Carousel_Temp2.png" alt="Second slide">
+                      <img class="d-block w-100" src="{{ asset('assets/img/product_Carousel_Temp2.jpg') }}" alt="Second slide">
                     </div>
                   </div>
                   <div class="carousel-item">
                     <div class="d-flex align-items-center h-100 w-100">
-                      <img class="d-block w-100" src="assets/img/product_Carousel_Temp3.jpg" alt="Third slide">
+                      <img class="d-block w-100" src="{{ asset('assets/img/product_Carousel_Temp3.jpg') }}" alt="Third slide">
                     </div>
                   </div>
                 </div>
-                <a class="carousel-control-prev" href="#banner" role="button" data-slide="prev">
+                <a class="carousel-control-prev" href="#product-carousel" role="button" data-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                   <span class="sr-only">Previous</span>
                 </a>
-                <a class="carousel-control-next" href="#banner" role="button" data-slide="next">
+                <a class="carousel-control-next" href="#product-carousel" role="button" data-slide="next">
                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
                   <span class="sr-only">Next</span>
                 </a>
