@@ -64,8 +64,8 @@
             <div class="col px-1 mb-2">
               <a href="{{ route('guest.product', ['id' => base64_encode($product->id)]) }}" class="card h-100">
                 <div class="card-body">
-                  <h5 class="card-title m-0">{{ $product->name }}</h5>
                   <img src="{{ asset('assets/img/img_default.jpeg') }}" class="img-thumbnail">
+                  <h5 class="card-title m-0">{{ $product->name }}</h5>
                   <h4 class="text-success mt-auto mb-0">&#8369; {{ number_format(($product->discounted_price != null ? $product->discounted_price : $product->price), 2) }}</h4>
                   @if($product->discounted_price != null)
                     <h6 class="m-0">
