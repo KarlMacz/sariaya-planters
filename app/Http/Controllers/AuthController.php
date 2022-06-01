@@ -18,9 +18,13 @@ class AuthController extends Controller
 {
     use Utilities;
 
-    public function showLogin()
+    public function showLogin(Request $request)
     {
-        return view('auth.login');
+        $redirect_to = $request->input('redirect_to');
+
+        return view('auth.login', [
+            'redirect_to' => $redirect_to
+        ]);
     }
 
     public function showRegister()
@@ -38,6 +42,7 @@ class AuthController extends Controller
 
     public function postLogin(Request $request)
     {
+        $redirect_to = $request->input('redirect_to', null);
         $email = $request->input('email');
         $password = $request->input('password');
 
@@ -46,6 +51,10 @@ class AuthController extends Controller
         if(!empty($user)) {
             if(Auth::attempt(['email' => $email, 'password' => $password])) {
                 $this->flashPrompt('ok', 'Login successful.');
+
+                if($redirect_to != null && $redirect_to != '') {
+                    return redirect($redirect_to);
+                }
 
                 return redirect()->route('guest.index');
             } else {
@@ -99,7 +108,7 @@ class AuthController extends Controller
                 $user->postal_code = $postal_code;
 
                 if($user->save()) {
-                    $this->flashPrompt('error', 'Registration successful.');
+                    $this->flashPrompt('ok', 'Registration successful.');
                 } else {
                     $this->flashPrompt('error', 'Failed to register account.');
                 }

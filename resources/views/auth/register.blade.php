@@ -93,7 +93,7 @@
               <div class="col-sm">
                 <div class="form-group">
                   <label for="" class="required">City / Municipality:</label>
-                  <select id="municipality-field"name="city" class="form-control" required>
+                  <select id="municipality-field" name="city" class="form-control" required>
                     <option value="" selected disabled>City / Municipality</option>
                   </select>
                 </div>
@@ -101,7 +101,7 @@
               <div class="col-sm">
                 <div class="form-group">
                   <label for="" class="required">Barangay:</label>
-                  <select id="barangay-field"name="barangay" class="form-control" required>
+                  <select id="barangay-field" name="barangay" class="form-control" required>
                     <option value="" selected disabled>Barangay</option>
                   </select>
                 </div>

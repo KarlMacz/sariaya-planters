@@ -29,22 +29,6 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
-          @if(Auth::check())
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('guest.cart') }}">
-              <div class="position-relative">
-                <span class="fa-solid fa-cart-shopping fa-fw"></span>
-                @if($cart->count() > 0)
-                  <span class="badge badge-primary position-absolute" style="top: 75%; right: 75%;">{{ $cart->count() }}</span>
-                @endif
-              </div>
-            </a>
-          </li>
-          @endif
-          <li class="nav-item active">
-            <a class="nav-link" href="{{ route('guest.shop') }}">Shop Now</a>
-          </li>
-          @if(Auth::check())
           <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
               {{ Auth::user()->full_name }}
@@ -56,11 +40,6 @@
               <a class="dropdown-item logout-button" href="#">Log Out</a>
             </div>
           </li>
-          @else
-          <li class="nav-item active">
-            <a class="nav-link" href="{{ route('auth.login') }}">Log In</a>
-          </li>
-          @endif
         </ul>
       </div>
     </div>

@@ -1,0 +1,60 @@
+<!-- Cart dropdown -->
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link" data-toggle="dropdown">
+    <div class="position-relative">
+      <span class="fa-solid fa-cart-shopping fa-fw"></span>
+      @if($cart->count() > 0)
+        <span class="badge badge-primary position-absolute" style="top: 75%; right: 75%;">{{ $cart->count() }}</span>
+      @endif
+    </div>
+  </a>
+  <div class="dropdown-menu dropdown-menu-right">
+    <div class="checkout-dropdown-form p-2">
+      <div class="list-group">
+        @if($cart->count() > 0)
+          @foreach($cart as $cart_item)
+            <div class="list-group-item">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h5 class="m-0"><a href="{{ route('guest.product', ['id' => base64_encode($cart_item->product_id)]) }}">{{ $cart_item->product->name }}</a></h5>
+                  <h6 class="text-success mt-auto m-0">&#8369; {{ number_format(($cart_item->product->discounted_price != null ? $cart_item->product->discounted_price : $cart_item->product->price), 2) }}</h6>
+                  <h6 class="m-0">
+                    <small>
+                      <s class="text-muted">&#8369; {{ number_format($cart_item->product->price, 2) }}</s>
+                      <span class="ml-2">{{ $cart_item->product->discount }}%</span>
+                    </small>
+                  </h6>
+                </div>
+                <div class="col-auto">x{{ $cart_item->quantity }}</div>
+                <div class="col-auto">
+                  <form action="{{ route('guest.remove-from-cart') }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <input type="hidden" name="id" value="{{ base64_encode($cart_item->id) }}">
+                    <button type="submit" class="btn btn-danger btn-sm m-0">
+                      <span class="fa-solid fa-trash fa-fw"></span>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          @endforeach
+        @else
+          <div class="list-group-item">
+            <div class="text-center">
+              <em class="text-muted">Empty Cart</em>
+            </div>
+          </div>
+        @endif
+      </div>
+      @if($cart->count() > 0)
+        <div class="text-right">
+          <a href="{{ route('guest.checkout') }}" class="btn btn-success btn-sm">
+            <span class="fa-solid fa-check fa-fw"></span>
+            <span class="ml-2">Checkout</span>
+          </a>
+        </div>
+      @endif
+    </div>
+  </div>
+</li>

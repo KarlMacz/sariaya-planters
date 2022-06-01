@@ -14,6 +14,9 @@
           <x-flash-alert />
           <form action="{{ route('auth.login') }}" method="POST">
             @csrf
+            @if($redirect_to != null)
+              <input type="hidden" name="redirect_to" value="{{ $redirect_to }}">
+            @endif
             <div class="form-group">
               <label for="">E-mail Address:</label>
               <input type="email" name="email" class="form-control" required autofocus>

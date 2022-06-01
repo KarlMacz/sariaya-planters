@@ -1,6 +1,10 @@
 /*
 * Customized Bootstrap
 */
+a.btn.btn-sm {
+  height: 33px;
+}
+
 a.card {
   color: inherit;
 }
@@ -81,6 +85,11 @@ label.required::after {
   border: none;
   border-radius: 1rem;
   overflow: hidden;
+}
+
+.checkout-dropdown-form {
+  width: 25rem;
+  max-width: 100%;
 }
 
 /*

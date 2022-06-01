@@ -20,7 +20,8 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'full_name'
+        'full_name',
+        'full_address'
     ];
 
     public function getFullNameAttribute()
@@ -32,6 +33,14 @@ class User extends Authenticatable
         return $this->first_name . ' ' . $this->last_name;
     }
 
+    public function getFullAddressAttribute()
+    {
+        return $this->address_line . ', ' .
+            $this->getBarangay->name . ', ' .
+            $this->getMunicipality->name . ', ' .
+            $this->getProvince->name . ($this->postal_code != null ? ' ' . $this->postal_code : '');
+    }
+
     public function products()
     {
         return $this->hasMany('App\Product', 'seller_id');
@@ -40,5 +49,20 @@ class User extends Authenticatable
     public function orders()
     {
         return $this->hasMany('App\Order', 'buyer_id');
+    }
+
+    public function getBarangay()
+    {
+        return $this->belongsTo('App\PhBarangay', 'barangay_id');
+    }
+
+    public function getMunicipality()
+    {
+        return $this->belongsTo('App\PhMunicipality', 'municipality_id');
+    }
+
+    public function getProvince()
+    {
+        return $this->belongsTo('App\PhProvince', 'province_id');
     }
 }

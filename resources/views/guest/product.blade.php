@@ -11,6 +11,7 @@
 @section('content')
   <div id="main-section">
     <div class="container py-5">
+      <x-flash-alert />
       <div class="card h-100">
         <div class="card-body">
           <div class="row">
@@ -56,26 +57,34 @@
               @if($product->description != null)
                 <div class="mt-4">{{ $product->description }}</div>
               @endif
-              <form action="">
+              <form action="{{ route('guest.add-to-cart') }}" method="POST">
                 @csrf
+                <input type="hidden" name="id" value="{{ base64_encode($product->id) }}">
                 <div class="form-group mt-4">
                   <div class="row align-items-center">
                     <div class="col-auto">
                       <span>Quantity:</span>
                     </div>
                     <div class="col col-md-2 px-0">
-                      <input type="number" class="form-control" min="0" max="{{ $product->quantity }}" value="0">
+                      <input type="number" class="form-control" name="quantity" min="1" max="{{ $product->quantity }}" value="0" {{ Auth::check() ? '' : 'disabled' }}>
                     </div>
                     <div class="col-auto">
-                      <span>{{ $product->quantity }} piece{{ $product->quantity == 1 ? '' : 's' }} available.</span>
+                      <span>{{ $product->quantity }} piece{{ ($product->quantity) == 1 ? '' : 's' }} available.</span>
                     </div>
                   </div>
                 </div>
                 <div>
-                  <button class="btn btn-success">
-                    <span class="fa-solid fa-cart-plus fa-fw"></span>
-                    <span class="ml-2">Add to Cart</span>
-                  </button>
+                  @if(Auth::check())
+                    <button type="submit" class="btn btn-success">
+                      <span class="fa-solid fa-cart-plus fa-fw"></span>
+                      <span class="ml-2">Add to Cart</span>
+                    </button>
+                  @else
+                    <a href="{{ route('auth.login', ['redirect_to' => route('guest.product', ['id' => base64_encode($product->id)], false)]) }}" class="btn btn-success">
+                      <span class="fa-solid fa-right-to-bracket fa-fw"></span>
+                      <span class="ml-2">Log In</span>
+                    </a>
+                  @endif
                 </div>
               </form>
             </div>

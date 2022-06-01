@@ -41,7 +41,6 @@
       <div class="row justify-content-center mb-4">
         <div class="col-sm-8">
           <form action="">
-            @csrf
             <div class="row">
               <div class="col-sm">
                 <div class="form-group">
