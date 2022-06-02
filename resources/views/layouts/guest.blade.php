@@ -50,7 +50,8 @@
               {{ Auth::user()->full_name }}
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item" href="{{ route('hub.orders') }}">Seller's Hub</a>
+            <a class="dropdown-item" href="{{ route('guest.transaction-history') }}">Transaction History</a>
+            <a class="dropdown-item" href="{{ route('hub.orders') }}">Seller's Hub</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Change Password</a>
               <a class="dropdown-item logout-button" href="#">Log Out</a>

@@ -92,6 +92,62 @@ label.required::after {
   max-width: 100%;
 }
 
+.timeline .timeline-item {
+  position: relative;
+  padding: 0.5rem 1rem 0.5rem 2rem;
+}
+
+.timeline .timeline-item::before {
+  background-color: #8ef3c5;
+  border: 2px solid #70c09b;
+  border-radius: 1rem;
+  content: '';
+  display: inline-block;
+  position: absolute;
+  z-index: 1;
+  top: 0.75rem;
+  left: 0.5rem;
+  height: 1rem;
+  width: 1rem;
+}
+
+.timeline .timeline-item:first-child:not(:last-child)::after {
+  background-color: #70c09b;
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 1rem;
+  bottom: 0;
+  left: calc(1rem - 1px);
+  width: 2px;
+}
+
+.timeline .timeline-item:last-child:not(:first-child)::after {
+  background-color: #70c09b;
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: calc(1rem - 1px);
+  height: 1rem;
+  width: 2px;
+}
+
+.timeline .timeline-item:not(:first-child):not(:last-child)::after {
+  background-color: #70c09b;
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(1rem - 1px);
+  width: 2px;
+}
+
+.lh-1 {
+  line-height: 1rem;
+}
+
 /*
 * ID-based Custom Styles
 */

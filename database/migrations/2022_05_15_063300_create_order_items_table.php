@@ -20,6 +20,8 @@ class CreateOrderItemsTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
             $table->unsignedBigInteger('quantity');
+            $table->double('at_price', 8, 2)->default(0.00);
+            $table->unsignedBigInteger('at_discount')->default(0);
             $table->timestamps();
         });
     }

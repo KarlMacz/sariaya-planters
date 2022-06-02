@@ -17,6 +17,7 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('buyer_id');
             $table->foreign('buyer_id')->references('id')->on('users');
+            $table->string('payment_method');
             $table->double('amount_paid', 8, 2)->default(0.00);
             $table->string('status')->default('PENDING');
             $table->timestamps();

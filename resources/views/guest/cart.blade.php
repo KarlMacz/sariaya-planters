@@ -13,7 +13,7 @@
     <div class="container py-5">
       <div class="row">
         <div class="col-sm-4">
-          <div class="card h-100">
+          <div class="card mb-4">
             <div class="card-body">
               <label>ORDERED BY:</label>
               <h4 class="mt-0">{{ Auth::user()->full_name }}</h4>
@@ -26,6 +26,7 @@
           <x-flash-alert />
           <div class="card h-100">
             <div class="card-body">
+              <h3 class="mt-0">My Cart</h3>
               <div class="list-group">
                 @if($cart->count() > 0)
                   @foreach($cart as $cart_item)
@@ -73,10 +74,10 @@
                   <form action="{{ route('guest.checkout') }}" method="POST">
                     @csrf
                     <div class="row align-items-center justify-content-between">
-                      <div class="col-sm-4">
+                      <div class="col-sm-5">
                         <div class="form-group mb-0">
                           <label for="">Payment Method:</label>
-                          <select name="payment_method" class="form-control">
+                          <select name="payment_method" class="form-control" required>
                             <option value="" selected disabled>Select an option...</option>
                             <option value="COD">Cash on Delivery</option>
                           </select>
