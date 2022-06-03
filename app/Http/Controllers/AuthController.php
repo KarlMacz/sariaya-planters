@@ -102,9 +102,9 @@ class AuthController extends Controller
                 $user->last_name = $last_name;
                 $user->contact_number = $contact_number;
                 $user->address_line = $address_line;
-                $user->barangay = $barangay;
-                $user->city = $city;
-                $user->province = $province;
+                $user->barangay_id = $barangay;
+                $user->municipality_id = $city;
+                $user->province_id = $province;
                 $user->postal_code = $postal_code;
 
                 if($user->save()) {
