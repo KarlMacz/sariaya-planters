@@ -21,8 +21,8 @@
     <div class="row">
       <div class="col-sm-3">
         <div class="list-group mb-4">
-        <a href="{{ route('hub.orders') }}" class="list-group-item">Orders</a>
-        <a href="{{ route('hub.products') }}" class="list-group-item">Products</a>
+          <a href="{{ route('hub.orders') }}" class="list-group-item">Orders</a>
+          <a href="{{ route('hub.products') }}" class="list-group-item">Products</a>
         </div>
       </div>
       <div class="col-sm">
@@ -40,7 +40,7 @@
             </div>
           </div>
           <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-striped m-0">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -77,10 +77,10 @@
                         @endif
                       </td>
                       <td class="text-center">
-                        <a href="{{ route('hub.products.add-edit', ['mode' => 'edit', 'id' => $product->id]) }}" class="btn btn-warning btn-sm d-inline-flex align-items-center">
+                        <a href="{{ route('hub.products.add-edit', ['mode' => 'edit', 'id' => $product->id]) }}" class="btn btn-warning btn-sm d-inline-flex align-items-center" data-toggle="tooltip" title="Edit">
                           <span class="fa-solid fa-edit fa-fw"></span>
                         </a>
-                        <button class="btn btn-danger btn-sm" data-var-id="{{ $product->id }}" data-var-name="{{ $product->name }}">
+                        <button class="btn btn-danger btn-sm" data-var-id="{{ $product->id }}" data-var-name="{{ $product->name }}" data-toggle="tooltip" title="Delete">
                           <span class="fa-solid fa-trash fa-fw"></span>
                         </button>
                       </td>

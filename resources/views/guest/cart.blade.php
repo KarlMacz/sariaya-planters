@@ -80,6 +80,8 @@
                           <select name="payment_method" class="form-control" required>
                             <option value="" selected disabled>Select an option...</option>
                             <option value="COD">Cash on Delivery</option>
+                            <!-- <option value="BANK">Thru Bank</option>
+                            <option value="E-WALLET">Sent via E-wallet</option> -->
                           </select>
                         </div>
                       </div>

@@ -20,7 +20,7 @@ class Order extends Model
 
                 break;
             case 'E-WALLET':
-                $payment_method = 'E-Wallet';
+                $payment_method = 'Sent via E-wallet';
 
                 break;
             default:
@@ -33,6 +33,11 @@ class Order extends Model
     public function items()
     {
         return $this->hasMany('App\OrderItem', 'order_id');
+    }
+
+    public function buyer()
+    {
+        return $this->belongsTo('App\User', 'buyer_id');
     }
 
     public function logs()

@@ -1,28 +1,12 @@
 @extends('layouts.hub')
 
-@section('scripts')
-  <script>
-    $(function() {
-      $('body').on('click', '.delete-button', function() {
-        let name = $(this).attr('data-var-name');
-
-        Swal.fire({
-          icon: 'question',
-          title: `Delete ${name}?`,
-          text: 'Are you sure you want to delete this product? This cannot be undone later.'
-        })
-      });
-    });
-  </script>
-@endsection
-
 @section('content')
   <div class="p-3 p-lg-5">
     <div class="row">
       <div class="col-sm-3">
         <div class="list-group mb-4">
-        <a href="{{ route('hub.orders') }}" class="list-group-item">Orders</a>
-        <a href="{{ route('hub.products') }}" class="list-group-item">Products</a>
+          <a href="{{ route('hub.orders') }}" class="list-group-item">Orders</a>
+          <a href="{{ route('hub.products') }}" class="list-group-item">Products</a>
         </div>
       </div>
       <div class="col-sm">

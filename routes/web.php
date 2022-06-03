@@ -35,10 +35,15 @@ Route::name('guest.')->group(function() {
     Route::delete('remove-from-cart', 'GuestController@deleteRemoveFromCart')->name('remove-from-cart');
 });
 
-Route::prefix('hub')->name('hub.')->group(function() {
+Route::middleware('auth')->prefix('hub')->name('hub.')->group(function() {
     Route::get('orders', 'HubController@showOrders')->name('orders');
+    Route::get('orders/{id}/payment', 'HubController@showOrderPayment')->name('orders.payment');
+    Route::get('orders/{id}/status', 'HubController@showOrderStatus')->name('orders.status');
     Route::get('products', 'HubController@showProducts')->name('products');
     Route::get('products/{mode}/{id?}', 'HubController@showAddEditProduct')->name('products.add-edit');
 
     Route::post('products/{mode}/{id?}', 'HubController@postAddEditProduct');
+
+    Route::put('orders/{id}/payment', 'HubController@putOrderPayment');
+    Route::put('orders/{id}/status', 'HubController@putOrderStatus');
 });

@@ -119,7 +119,7 @@
                           </tr>
                         </tbody>
                       </table>
-                      @if($order->logs->count() > 0 && $order->status !== 'COMPLETED'  && $order->status !== 'CANCELLED')
+                      @if($order->logs->count() > 0 && $order->status !== 'CANCELLED')
                         <div class="timeline">
                           @foreach($order->logs as $order_log)
                             <div class="timeline-item">

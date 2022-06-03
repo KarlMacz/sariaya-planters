@@ -35,7 +35,7 @@
               <div class="position-relative">
                 <span class="fa-solid fa-cart-shopping fa-fw"></span>
                 @if($cart->count() > 0)
-                  <span class="badge badge-primary position-absolute" style="top: 75%; right: 75%;">{{ $cart->count() }}</span>
+                  <span class="badge badge-primary badge-pill position-absolute" style="top: 60%; right: 60%;">{{ $cart->count() }}</span>
                 @endif
               </div>
             </a>

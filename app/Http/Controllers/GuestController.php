@@ -67,6 +67,7 @@ class GuestController extends Controller
     public function showTransactionHistory()
     {
         $orders = Order::where('buyer_id', Auth::user()->id)
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return view('guest.transaction-history', [
@@ -166,8 +167,15 @@ class GuestController extends Controller
                         $new_order_item->at_discount = $cart_item->product->discount;
 
                         if($new_order_item->save()) {
-                            Cart::where('id', $cart_item->id)
-                                ->delete();
+                            $product = Product::where('id', $cart_item->product_id)
+                                ->first();
+
+                            $product->quantity -= $cart_item->quantity;
+
+                            if($product->save()) {
+                                Cart::where('id', $cart_item->id)
+                                    ->delete();
+                            }
                         }
                     }
 
