@@ -85,6 +85,7 @@ class HubController extends Controller
         if($mode == 'add') {
             $new_product = new Product;
 
+            $new_product->seller_id = Auth::user()->id;
             $new_product->name = $name;
             $new_product->description = $description;
             $new_product->price = $price;
@@ -102,8 +103,7 @@ class HubController extends Controller
         }
 
         if($mode == 'edit') {
-            $existing_product = Product::where('seller_id', Auth::user()->id)
-                ->where('id', $id)
+            $existing_product = Product::where('id', $id)
                 ->first();
 
             $existing_product->name = $name;
