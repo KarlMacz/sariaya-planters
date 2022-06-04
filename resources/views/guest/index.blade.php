@@ -5,17 +5,17 @@
     <div class="carousel-inner">
       <div class="carousel-item active">
         <div class="d-flex align-items-center h-100 w-100">
-          <img class="d-block w-100" src="{{ route('assets/img/carousel1.jpg') }}" alt="First slide">
+          <img class="d-block w-100" src="{{ asset('assets/img/carousel1.jpg') }}" alt="First slide">
         </div>
       </div>
       <div class="carousel-item">
         <div class="d-flex align-items-center h-100 w-100">
-          <img class="d-block w-100" src="{{ route('assets/img/carousel2.jpg') }}" alt="Second slide">
+          <img class="d-block w-100" src="{{ asset('assets/img/carousel2.jpg') }}" alt="Second slide">
         </div>
       </div>
       <div class="carousel-item">
         <div class="d-flex align-items-center h-100 w-100">
-          <img class="d-block w-100" src="{{ route('assets/img/carousel3.jpg') }}" alt="Third slide">
+          <img class="d-block w-100" src="{{ asset('assets/img/carousel3.jpg') }}" alt="Third slide">
         </div>
       </div>
     </div>
