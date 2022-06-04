@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 
 use App\Http\Traits\Utilities;
 
@@ -19,6 +20,11 @@ class HubController extends Controller
     public function showOrders()
     {
         $orders = Order::where('status', '!=', 'CANCELLED')
+            ->whereHas('items', function(Builder $query1) {
+                $query1->whereHas('product', function(Builder $query2) {
+                    $query2->where('seller_id', Auth::user()->id);
+                });
+            })
             ->orderBy('created_at', 'desc')
             ->get();
 
