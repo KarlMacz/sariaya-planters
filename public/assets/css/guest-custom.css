@@ -46,6 +46,19 @@ a.card:hover {
   border-bottom-right-radius: 8px;
 }
 
+.navbar .navbar-collapse.collapse.show {
+  display: flex !important;
+  justify-content: center;
+}
+
+.navbar .navbar-collapse.collapse.show > .navbar-nav {
+  width: 100%;
+}
+
+.navbar .navbar-collapse.collapse.show > .navbar-nav .nav-link {
+  margin: 0;
+}
+
 /*
 * Other Styles
 */
@@ -153,4 +166,20 @@ label.required::after {
 */
 #banner > .carousel-inner > .carousel-item {
   height: 75vh;
+}
+
+@media (min-width: 992px) {
+  .navbar .navbar-collapse.collapse,
+  .navbar .navbar-collapse.collapse.show {
+    display: flex !important;
+    justify-content: flex-end;
+  }
+
+  .navbar .navbar-collapse.collapse.show > .navbar-nav {
+    width: auto;
+  }
+
+  .navbar .navbar-collapse.collapse.show > .navbar-nav .nav-link {
+    margin: 15px 3px;
+  }
 }
