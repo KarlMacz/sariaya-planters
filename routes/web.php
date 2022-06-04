@@ -32,6 +32,8 @@ Route::name('guest.')->group(function() {
     Route::post('add-to-cart', 'GuestController@postAddToCart')->name('add-to-cart');
     Route::post('checkout', 'GuestController@postCheckout')->name('checkout');
 
+    Route::put('transaction-history/cancel', 'GuestController@putCancelTransaction')->name('transaction-history.cancel');
+
     Route::delete('remove-from-cart', 'GuestController@deleteRemoveFromCart')->name('remove-from-cart');
 });
 

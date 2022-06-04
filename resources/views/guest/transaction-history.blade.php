@@ -31,7 +31,7 @@
                 @if($orders->count() > 0)
                   @foreach($orders as $order)
                     <div class="list-group-item">
-                      <h6>Transaction Date: <strong>{{ $order->created_at->format('F d, Y (h:i A)') }}</strong></h6>
+                      <h6 class="text-right">Transaction Date: <strong>{{ $order->created_at->format('F d, Y (h:i A)') }}</strong></h6>
                       <?php
                         $total = 0;
                       ?>
@@ -107,6 +107,19 @@
 
                                   @break
                               @endswitch
+                              @if($order->status == 'PENDING' || $order->status == 'PROCESSING')
+                                <div class="float-right">
+                                  <form action="{{ route('guest.transaction-history.cancel') }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="id" value="{{ base64_encode($order->id) }}">
+                                    <button type="submit" class="btn btn-danger btn-xs ">
+                                      <span class="fa-solid fa-times fa-fw"></span>
+                                      <span class="ml-2">Cancel Order</span>
+                                    </button>
+                                  </form>
+                                </div>
+                              @endif
                             </td>
                           </tr>
                           <tr>

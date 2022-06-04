@@ -11,6 +11,7 @@ use Auth;
 use App\Cart;
 use App\Order;
 use App\OrderItem;
+use App\OrderLog;
 use App\Product;
 
 class GuestController extends Controller
@@ -66,6 +67,10 @@ class GuestController extends Controller
 
     public function showTransactionHistory()
     {
+        if(!Auth::check()) {
+            return redirect()->route('auth.login');
+        }
+
         $orders = Order::where('buyer_id', Auth::user()->id)
             ->orderBy('created_at', 'desc')
             ->get();
@@ -188,6 +193,35 @@ class GuestController extends Controller
             }
         } else {
             $this->flashPrompt('error', 'Failed to update product in the cart.');
+        }
+
+        return redirect()->back();
+    }
+
+    public function putCancelTransaction(Request $request)
+    {
+        $id = base64_decode($request->input('id'));
+
+        $order = Order::where('id', $id)
+            ->first();
+
+        if($order != null) {
+            $order->status = 'CANCELLED';
+
+            if($order->save()) {
+                $order_log = new OrderLog;
+
+                $order_log->order_id = $order->id;
+                $order_log->message = 'Your order has been cancelled.';
+
+                $order_log->save();
+
+                $this->flashPrompt('ok', 'Order has been cancelled.');
+            } else {
+                $this->flashPrompt('error', 'Failed to cancel order.');
+            }
+        } else {
+            $this->flashPrompt('error', 'Order doesn\'t exist.');
         }
 
         return redirect()->back();
