@@ -35,9 +35,9 @@
         <h2 class="mt-0">What We Offer</h2>
         <h5>Indoor plants</h5>
         <p>Should be an essential component of every interior design. Greenery brightens up indoor spaces and is known to have mood-boosting qualities.</p>
-        <h6>Outdoor plants</h6>
+        <h5>Outdoor plants</h5>
         <p>offer us more than pretty colors and fragrances to enjoy. Plants give people health benefits as well, and some of those benefits might surprise you.</p>
-        <h7>Garden care</h7>
+        <h5>Garden care</h5>
         <p>From choosing the best plants for your yard these  will help you make your garden the best it can be.</p>
       </div>
       <div class="col-md-5">
