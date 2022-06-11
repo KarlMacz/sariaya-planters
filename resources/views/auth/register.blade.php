@@ -107,6 +107,14 @@
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-sm-8">
+                <div class="form-group">
+                  <label for="">Store Name:</label>
+                  <input type="text" name="store_name" class="form-control">
+                </div>
+              </div>
+            </div>
             <div class="text-right">
               <button type="submit" class="btn btn-success">
                 <span class="fas fa-sign-in-alt fa-fw"></span>

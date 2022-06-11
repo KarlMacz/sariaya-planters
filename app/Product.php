@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $appends = [
-        'discounted_price'
+        'discounted_price',
+        'rating'
     ];
 
     public function getDiscountedPriceAttribute()
@@ -17,6 +18,16 @@ class Product extends Model
         }
 
         return null;
+    }
+
+    public function getRatingAttribute()
+    {
+        return 0;
+    }
+
+    public function seller()
+    {
+        return $this->belongsTo('App\User', 'seller_id');
     }
 
     public function images()

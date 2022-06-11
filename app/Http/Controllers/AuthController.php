@@ -88,6 +88,7 @@ class AuthController extends Controller
         $province = $request->input('province');
         $city = $request->input('city');
         $barangay = $request->input('barangay');
+        $store_name = $request->input('store_name');
 
         $user = User::where('email', $email)->first();
 
@@ -106,6 +107,7 @@ class AuthController extends Controller
                 $user->municipality_id = $city;
                 $user->province_id = $province;
                 $user->postal_code = $postal_code;
+                $user->store_name = $store_name;
 
                 if($user->save()) {
                     $this->flashPrompt('ok', 'Registration successful.');

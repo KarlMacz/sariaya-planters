@@ -25,7 +25,8 @@ class UserSeeder extends Seeder
                 'barangay_id' => 41251,
                 'municipality_id' => 1636,
                 'province_id' => 82,
-                'postal_code' => '1012'
+                'postal_code' => '1012',
+                'store_name' => 'First Pinoy Store'
             ]
         ]);
 

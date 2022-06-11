@@ -72,6 +72,9 @@
                       <span class="ml-2">{{ $product->discount }}%</span>
                     </h6>
                   @endif
+                  <h6 class="mt-4 mb-0">
+                    <small>Seller: {{ $product->seller->store_name ?? '' }}</small>
+                  </h6>
                 </div>
               </a>
             </div>

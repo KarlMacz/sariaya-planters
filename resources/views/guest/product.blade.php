@@ -47,6 +47,7 @@
             </div>
             <div class="col-sm">
               <h5 class="card-title m-0">{{ $product->name }}</h5>
+              <h6 class="card-subtitle mb-4">Rate: {{ $product->rating }}</h6>
               <h4 class="text-success mt-auto mb-0">&#8369; {{ number_format(($product->discounted_price != null ? $product->discounted_price : $product->price), 2) }}</h4>
               @if($product->discounted_price != null)
                 <h6 class="m-0">
@@ -87,6 +88,9 @@
                   @endif
                 </div>
               </form>
+              <hr>
+              <h6 class="m-0">Seller</h6>
+              <h5>{{ $product->seller->store_name ?? '' }}</h5>
             </div>
           </div>
         </div>

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
 
 use App\Http\Traits\Utilities;
 
 use Auth;
+use DB;
 
 use App\Cart;
 use App\Order;
@@ -32,6 +34,9 @@ class GuestController extends Controller
         $products = Product::where('is_displayed', true)
             ->where('quantity', '>', 0)
             ->where('name', 'LIKE', '%' . $search_for . '%')
+            ->orWhereHas('seller', function(Builder $query) use ($search_for) {
+                $query->Where('store_name', 'LIKE', '%' . $search_for . '%');
+            })
             ->get();
 
         return view('guest.shop', [
