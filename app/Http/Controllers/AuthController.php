@@ -88,7 +88,7 @@ class AuthController extends Controller
         $province = $request->input('province');
         $city = $request->input('city');
         $barangay = $request->input('barangay');
-        $store_name = $request->input('store_name');
+        $store_name = $request->input('store_name', null);
 
         $user = User::where('email', $email)->first();
 
@@ -119,6 +119,49 @@ class AuthController extends Controller
             }
         } else {
             $this->flashPrompt('error', 'Account with the same e-mail address already exist.');
+        }
+
+        return redirect()->back();
+    }
+
+    public function putUpdateProfile($id, Request $request)
+    {
+        $id = base64_decode($id);
+        $email = $request->input('email');
+        $contact_number = $request->input('contact_number', null);
+        $first_name = $request->input('first_name');
+        $middle_name = $request->input('middle_name', null);
+        $last_name = $request->input('last_name');
+        $address_line = $request->input('address_line');
+        $postal_code = $request->input('postal_code', null);
+        $province = $request->input('province');
+        $city = $request->input('city');
+        $barangay = $request->input('barangay');
+        $store_name = $request->input('store_name', null);
+
+        $user = User::where('id', $id)
+            ->first();
+
+        if(!empty($user)) {
+            $user->email = $email;
+            $user->contact_number = $contact_number;
+            $user->first_name = $first_name;
+            $user->middle_name = $middle_name;
+            $user->last_name = $last_name;
+            $user->address_line = $address_line;
+            $user->postal_code = $postal_code;
+            $user->province_id = $province;
+            $user->municipality_id = $city;
+            $user->barangay_id = $barangay;
+            $user->store_name = $store_name;
+
+            if($user->save()) {
+                $this->flashPrompt('ok', 'Profile has been updated.');
+            } else {
+                $this->flashPrompt('error', 'Failed to update profile.');
+            }
+        } else {
+            $this->flashPrompt('error', 'Account doesn\'t exist.');
         }
 
         return redirect()->back();

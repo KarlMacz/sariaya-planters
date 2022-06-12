@@ -15,8 +15,9 @@
         <div class="card-body">
           <div class="display-5 mb-2">Profile</div>
           <x-flash-alert />
-          <form action="{{ route('auth.register') }}" method="POST">
+          <form action="{{ route('auth.profile.update', ['id' => base64_encode(Auth::user()->id)]) }}" method="POST">
             @csrf
+            @method('PUT')
             <div class="row">
               <div class="col-sm-8">
                 <div class="form-group">
@@ -69,7 +70,7 @@
               <div class="col-sm">
                 <div class="form-group">
                 <label for="" class="required">Province:</label>
-                  <select id="province-field" name="province" class="form-control" value="{{ Auth::user()->province_id}}" required>
+                  <select id="province-field" name="province" class="form-control" required>
                     <option value="" selected disabled>Province</option>
                     @if(count($provinces) > 0)
                       @foreach($provinces as $province)
@@ -105,9 +106,9 @@
               </div>
             </div>
             <div class="text-right">
-              <button type="submit" class="btn btn-success">
-                <span class="fas fa-sign-in-alt fa-fw"></span>
-                <span class="ml-2">Sign Up</span>
+              <button type="submit" id="save-button" class="btn btn-success" disabled>
+                <span class="fas fa-save fa-fw"></span>
+                <span class="ml-2">Save Changes</span>
               </button>
             </div>
           </form>
@@ -115,4 +116,83 @@
       </div>
     </div>
   </div>
+@endsection
+
+@section('scripts')
+  <script>
+    function loadMunicipalities(province_id, callback = null) {
+      $.ajax({
+        url: "{{ route('api.fetch.municipality') }}",
+        method: 'POST',
+        data: {
+          ph_province_id: province_id
+        },
+        dataType: 'json',
+        success: function(response) {
+          if(response.status == 'ok') {
+            if(response.data.length > 0) {
+              $('#municipality-field').html(`<option value="" selected disabled>City / Municipality</option>`);
+
+              response.data.forEach(function(item) {
+                $('#municipality-field').append(`<option value="${item.id}">${item.name}</option>`);
+              });
+            }
+
+            if(callback != null) {
+              callback();
+            }
+          }
+        }
+      });
+    }
+
+    function loadBarangays(municipality_id, callback = null) {
+      $.ajax({
+        url: "{{ route('api.fetch.barangay') }}",
+        method: 'POST',
+        data: {
+          ph_municipality_id: municipality_id
+        },
+        dataType: 'json',
+        success: function(response) {
+          if(response.status == 'ok') {
+            if(response.data.length > 0) {
+              $('#barangay-field').html(`<option value="" selected disabled>Barangay</option>`);
+
+              response.data.forEach(function(item) {
+                $('#barangay-field').append(`<option value="${item.id}">${item.name}</option>`);
+              });
+            }
+
+            if(callback != null) {
+              callback();
+            }
+          }
+        }
+      });
+    }
+
+    $(function() {
+      $('body').on('change', '#province-field', function(e) {
+        loadMunicipalities(e.target.value);
+      });
+
+      $('body').on('change', '#municipality-field', function(e) {
+        loadBarangays(e.target.value);
+      });
+
+      $('#province-field').val('{{ Auth::user()->province_id }}');
+
+
+      loadMunicipalities('{{ Auth::user()->province_id }}', function() {
+        $('#municipality-field').val('{{ Auth::user()->municipality_id }}');
+
+        loadBarangays('{{ Auth::user()->municipality_id }}', function() {
+          $('#barangay-field').val('{{ Auth::user()->barangay_id }}');
+
+          $('#save-button').attr('disabled', false);
+        });
+      });
+    });
+  </script>
 @endsection

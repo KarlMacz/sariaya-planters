@@ -20,6 +20,8 @@ Route::name('auth.')->group(function() {
     Route::post('login', 'AuthController@postLogin');
     Route::post('logout', 'AuthController@postLogout')->name('logout');
     Route::post('register', 'AuthController@postRegister');
+
+    Route::put('profile/{id}/update', 'AuthController@putUpdateProfile')->name('profile.update');
 });
 
 Route::name('guest.')->group(function() {
