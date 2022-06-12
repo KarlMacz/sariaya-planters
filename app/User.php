@@ -75,7 +75,7 @@ class User extends Authenticatable
             foreach($orders as $order) {
                 if($order->items->count() > 0) {
                     foreach($order->items as $order_item) {
-                        if($order_item->product_id == $product_id && $order->status != 'CANCELLED' && $order->status != 'DENIED') {
+                        if($order_item->product_id == $product_id && $order->status == 'COMPLETED') {
                             $has_ordered = true;
                         }
                     }
