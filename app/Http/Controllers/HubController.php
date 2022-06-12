@@ -12,6 +12,7 @@ use Auth;
 use App\Order;
 use App\OrderLog;
 use App\Product;
+use App\ProductImage;
 
 class HubController extends Controller
 {
@@ -79,6 +80,18 @@ class HubController extends Controller
         ]);
     }
 
+    public function showManageProductImages($id)
+    {
+        $product = null;
+
+        $product = Product::where('id', $id)
+            ->first();
+
+        return view('hub.manage-product-images', [
+            'product' => $product
+        ]);
+    }
+
     public function postAddEditProduct($mode, $id = null, Request $request)
     {
         $name = $request->input('name');
@@ -126,6 +139,41 @@ class HubController extends Controller
             } else {
                 $this->flashPrompt('error', 'Failed to edit product.');
             }
+        }
+
+        return redirect()->back();
+    }
+
+    public function postManageProductImages($id, Request $request)
+    {
+        $id = base64_decode($id);
+        $images = $request->file('images');
+
+        if($request->hasFile('images') && count($images) > 0) {
+            $ctr = 0;
+
+            foreach($images as $image) {
+                $filepath = $image->store('uploads', 'root_public');
+
+                if($filepath) {
+                    $product_image = new ProductImage;
+
+                    $product_image->product_id = $id;
+                    $product_image->filename = basename($filepath);
+
+                    if($product_image->save()) {
+                        $ctr += 1;
+                    }
+                }
+            }
+
+            if($ctr > 0) {
+                $this->flashPrompt('ok', 'Product Image(s) has been uploaded.');
+            } else {
+                $this->flashPrompt('error', 'Failed to upload product images.');
+            }
+        } else {
+            $this->flashPrompt('error', 'No images selected.');
         }
 
         return redirect()->back();
@@ -212,6 +260,25 @@ class HubController extends Controller
             }
         } else {
             $this->flashPrompt('error', 'Order doesn\'t exist.');
+        }
+
+        return redirect()->back();
+    }
+
+    public function deleteProductImage($id, Request $request)
+    {
+        $id = base64_decode($id);
+
+        ProductImage::where('id', $id)
+            ->delete();
+
+        $image = ProductImage::where('id', $id)
+            ->first();
+
+        if($image == null) {
+            $this->flashPrompt('ok', 'Product Image has been deleted.');
+        } else {
+            $this->flashPrompt('error', 'Failed to delete product image.');
         }
 
         return redirect()->back();

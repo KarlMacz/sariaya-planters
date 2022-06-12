@@ -47,9 +47,13 @@ Route::middleware('auth')->prefix('hub')->name('hub.')->group(function() {
     Route::get('orders/{id}/status', 'HubController@showOrderStatus')->name('orders.status');
     Route::get('products', 'HubController@showProducts')->name('products');
     Route::get('products/{mode}/{id?}', 'HubController@showAddEditProduct')->name('products.add-edit');
+    Route::get('products/{id}/images/manage', 'HubController@showManageProductImages')->name('products.manage-images');
 
     Route::post('products/{mode}/{id?}', 'HubController@postAddEditProduct');
+    Route::post('products/{id}/images/manage', 'HubController@postManageProductImages');
 
     Route::put('orders/{id}/payment', 'HubController@putOrderPayment');
     Route::put('orders/{id}/status', 'HubController@putOrderStatus');
+
+    Route::delete('products/images/{id}/delete', 'HubController@deleteProductImage')->name('products.delete-image');
 });

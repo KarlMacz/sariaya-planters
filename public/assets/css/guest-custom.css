@@ -218,6 +218,20 @@ label.required::after {
   position: absolute;
 }
 
+.btn-cross {
+  background-color: #eb5e28;
+  border: none;
+  border-radius: 1.5rem;
+  color: #fff;
+  font-size: 0.75rem;
+  position: absolute;
+  padding: 0;
+  margin-top: -0.25rem;
+  margin-left: -0.25rem;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
 /*
 * ID-based Custom Styles
 */

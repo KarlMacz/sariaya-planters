@@ -84,6 +84,9 @@
                         <a href="{{ route('hub.products.add-edit', ['mode' => 'edit', 'id' => $product->id]) }}" class="btn btn-warning btn-sm d-inline-flex align-items-center" data-toggle="tooltip" title="Edit">
                           <span class="fa-solid fa-edit fa-fw"></span>
                         </a>
+                        <a href="{{ route('hub.products.manage-images', ['id' => $product->id]) }}" class="btn btn-info btn-sm d-inline-flex align-items-center" data-toggle="tooltip" title="Manage Images">
+                          <span class="fa-solid fa-images fa-fw"></span>
+                        </a>
                         <button class="btn btn-danger btn-sm" data-var-id="{{ $product->id }}" data-var-name="{{ $product->name }}" data-toggle="tooltip" title="Delete">
                           <span class="fa-solid fa-trash fa-fw"></span>
                         </button>

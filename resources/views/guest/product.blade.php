@@ -18,23 +18,17 @@
             <div class="col-sm-4">
               <!-- Product Image Carousel -->
               <div id="product-carousel" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <div class="d-flex align-items-center h-100 w-100">
-                      <img class="d-block w-100" src="{{ asset('assets/img/product_Carousel_Temp1.jpg') }}" alt="First slide">
-                    </div>
+                @if($product->images->count() > 0)
+                  <div class="carousel-inner">
+                    @foreach($product->images as $index => $image)
+                      <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                        <div class="d-flex align-items-center h-100 w-100">
+                          <img class="d-block w-100" src="{{ asset('uploads/' . $image->filename) }}">
+                        </div>
+                      </div>
+                    @endforeach
                   </div>
-                  <div class="carousel-item">
-                    <div class="d-flex align-items-center h-100 w-100">
-                      <img class="d-block w-100" src="{{ asset('assets/img/product_Carousel_Temp2.jpg') }}" alt="Second slide">
-                    </div>
-                  </div>
-                  <div class="carousel-item">
-                    <div class="d-flex align-items-center h-100 w-100">
-                      <img class="d-block w-100" src="{{ asset('assets/img/product_Carousel_Temp3.jpg') }}" alt="Third slide">
-                    </div>
-                  </div>
-                </div>
+                @endif
                 <a class="carousel-control-prev" href="#product-carousel" role="button" data-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                   <span class="sr-only">Previous</span>
