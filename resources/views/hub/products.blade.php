@@ -59,7 +59,11 @@
                       <td>{{ $product->name }}</td>
                       <td>
                         @if($product->description != null && $product->description != '')
-                          {{ $product->description }}
+                          @if(strlen($product->description) > 100)
+                            {{ substr($product->description, 0, 100) }}...
+                          @else
+                            {{ $product->description }}
+                          @endif
                         @else
                           <small>
                             <em class="text-muted">Not Provided</em>
