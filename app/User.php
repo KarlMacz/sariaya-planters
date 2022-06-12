@@ -65,4 +65,24 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\PhProvince', 'province_id');
     }
+
+    public function hasOrderedProduct($product_id)
+    {
+        $has_ordered = false;
+        $orders = $this->orders;
+
+        if($orders->count() > 0) {
+            foreach($orders as $order) {
+                if($order->items->count() > 0) {
+                    foreach($order->items as $order_item) {
+                        if($order_item->product_id == $product_id && $order->status != 'CANCELLED' && $order->status != 'DENIED') {
+                            $has_ordered = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $has_ordered;
+    }
 }

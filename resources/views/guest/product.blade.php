@@ -113,7 +113,7 @@
           @endif
         </div>
       </div>
-      @if(Auth::check())
+      @if(Auth::check() && Auth::user()->hasOrderedProduct($product->id))
         <div class="card mb-4">
           <div class="card-body">
             <form action="{{ route('guest.product.comment', ['id' => base64_encode($product->id)]) }}" method="POST">
