@@ -22,7 +22,22 @@ class Product extends Model
 
     public function getRatingAttribute()
     {
+        $overall_rating = 0;
+
+        if($this->comments->count() > 0) {
+            foreach($this->comments as $comment) {
+                $overall_rating += $comment->rating;
+            }
+
+            return $overall_rating / $this->comments->count();
+        }
+
         return 0;
+    }
+
+    public function comments()
+    {
+        return $this->hasMany('App\ProductComment', 'product_id');
     }
 
     public function seller()

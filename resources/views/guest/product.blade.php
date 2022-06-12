@@ -12,7 +12,7 @@
   <div id="main-section">
     <div class="container py-5">
       <x-flash-alert />
-      <div class="card h-100">
+      <div class="card mb-4">
         <div class="card-body">
           <div class="row">
             <div class="col-sm-4">
@@ -46,17 +46,27 @@
               </div>
             </div>
             <div class="col-sm">
-              <h5 class="card-title m-0">{{ $product->name }}</h5>
-              <h6 class="card-subtitle mb-4">Rate: {{ $product->rating }}</h6>
+              <h4 class="card-title m-0">{{ $product->name }}</h4>
+              @if($product->rating > 0)
+                <div class="d-flex align-items-center mb-2">
+                  <small class="mr-2">Overall Rating: {{ $product->rating }}</small>
+                  <div class="rating">
+                    @for($i = 0; $i < $product->rating; $i++)
+                      <span class="colored">☆</span>
+                    @endfor
+                  </div>
+                </div>
+              @else
+                <div class="mb-2">
+                  <em class="text-muted">No rating</em>
+                </div>
+              @endif
               <h4 class="text-success mt-auto mb-0">&#8369; {{ number_format(($product->discounted_price != null ? $product->discounted_price : $product->price), 2) }}</h4>
               @if($product->discounted_price != null)
                 <h6 class="m-0">
                   <s class="text-muted">&#8369; {{ number_format($product->price, 2) }}</s>
                   <span class="ml-2">{{ $product->discount }}%</span>
                 </h6>
-              @endif
-              @if($product->description != null)
-                <div class="mt-4">{{ $product->description }}</div>
               @endif
               <form action="{{ route('guest.add-to-cart') }}" method="POST">
                 @csrf
@@ -88,13 +98,85 @@
                   @endif
                 </div>
               </form>
-              <hr>
-              <h6 class="m-0">Seller</h6>
-              <h5>{{ $product->seller->store_name ?? '' }}</h5>
             </div>
           </div>
         </div>
       </div>
+
+      <div class="card mb-4">
+        <div class="card-body">
+          <h6 class="m-0">Seller:</h6>
+          <h4 class="mt-0 mb-{{ $product->description != null && $product->description != '' ? '4' : '0' }}">{{ $product->seller->store_name ?? '' }}</h4>
+          @if($product->description != null && $product->description != '')
+            <h6 class="m-0">Description:</h6>
+            <div>{!! nl2br(trim($product->description)) !!}</div>
+          @endif
+        </div>
+      </div>
+      @if(Auth::check())
+        <div class="card mb-4">
+          <div class="card-body">
+            <form action="{{ route('guest.product.comment', ['id' => base64_encode($product->id)]) }}" method="POST">
+              @csrf
+              <div class="form-group">
+                <label>Comment:</label>
+                <textarea name="message" rows="2" class="form-control no-resize" required></textarea>
+              </div>
+              <div class="row">
+                <div class="col-sm">
+                  <div class="d-flex align-items-center mb-2">
+                    <label>Rate:</label>
+                    <div class="rating">
+                      <input type="radio" id="rating-5" name="rating" value="5" required><label for="rating-5">☆</label>
+                      <input type="radio" id="rating-4" name="rating" value="4" required><label for="rating-4">☆</label>
+                      <input type="radio" id="rating-3" name="rating" value="3" required><label for="rating-3">☆</label>
+                      <input type="radio" id="rating-2" name="rating" value="2" required><label for="rating-2">☆</label>
+                      <input type="radio" id="rating-1" name="rating" value="1" required><label for="rating-1">☆</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-auto">
+                  <div class="text-right">
+                    <button type="submit" class="btn btn-success">
+                      <span class="fa-solid fa-paper-plane fa-fw"></span>
+                      <span class="ml-2">Post</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      @endif
+      @if($product->comments->count() > 0)
+        <div class="card mb-4">
+          <div class="card-body">
+            <h6>Comments:</h6>
+            <hr>
+            @foreach($product->comments as $comment)
+              <div class="p-2">
+                <div>
+                  <strong>{{ $comment->user->full_name }}</strong>
+                </div>
+                @if($comment->rating > 0)
+                  <div class="rating">
+                    @for($i = 0; $i < $comment->rating; $i++)
+                      <span class="colored">☆</span>
+                    @endfor
+                  </div>
+                @endif
+                @if($comment->comment != null && $comment->comment != '')
+                  <div>{!! nl2br(trim($comment->comment)) !!}</div>
+                @else
+                  <div>
+                    <em>No comment.</em>
+                  </div>
+                @endif
+              </div>
+            @endforeach
+          </div>
+        </div>
+      @endif
     </div>
   </div>
 @endsection

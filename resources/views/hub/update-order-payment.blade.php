@@ -20,7 +20,7 @@
             <div class="row">
               <div class="col-sm-6">
                 <x-flash-alert />
-                <form action="{{ route('hub.orders.payment', ['id' => ($order->id ?? null)]) }}" method="POST">
+                <form action="{{ route('hub.orders.payment', ['id' => base64_encode($order->id)]) }}" method="POST">
                   @csrf
                   @method('PUT')
                   <div class="form-group">

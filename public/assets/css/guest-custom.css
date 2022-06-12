@@ -1,6 +1,10 @@
 /*
 * Customized Bootstrap
 */
+textarea.no-resize {
+  resize: none;
+}
+
 a.btn.btn-sm {
   height: 33px;
 }
@@ -159,6 +163,55 @@ label.required::after {
 
 .lh-1 {
   line-height: 1rem;
+}
+
+.rating {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.rating > input {
+  display: none;
+}
+
+.rating > label {
+  color: #ffd600;
+  cursor: pointer;
+  font-size: 1.5rem;
+  position: relative;
+  line-height: 1;
+}
+
+.rating > label::before {
+  content: "\2605";
+  opacity: 0;
+  position: absolute;
+}
+
+.rating > label:hover:before,
+.rating > label:hover ~ label:before {
+  opacity: 1 !important;
+}
+
+.rating > input:checked ~ label:before{
+  opacity: 1;
+}
+
+.rating:hover > input:checked ~ label:before {
+  opacity: 0.4;
+}
+
+.rating > span.colored {
+  color: #ffd600;
+  font-size: 1.5rem;
+  position: relative;
+  line-height: 1;
+}
+
+.rating > span.colored:before {
+  content: "\2605";
+  position: absolute;
 }
 
 /*

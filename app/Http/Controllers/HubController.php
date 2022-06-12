@@ -192,6 +192,7 @@ class HubController extends Controller
 
     public function putOrderPayment($id, Request $request)
     {
+        $id = base64_decode($id);
         $amount_paid = $request->input('amount_paid');
 
         $order = Order::where('id', $id)
@@ -213,6 +214,6 @@ class HubController extends Controller
             $this->flashPrompt('error', 'Order doesn\'t exist.');
         }
 
-        return redirect()->route('hub.orders.payment');
+        return redirect()->back();
     }
 }

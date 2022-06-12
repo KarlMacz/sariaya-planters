@@ -28,7 +28,9 @@ Route::name('guest.')->group(function() {
     Route::get('product/{id}', 'GuestController@showProduct')->name('product');
     Route::get('cart', 'GuestController@showCart')->name('cart');
     Route::get('transaction-history', 'GuestController@showTransactionHistory')->name('transaction-history');
+    Route::get('profile', 'GuestController@showProfile')->name('profile');
 
+    Route::post('product/{id}/comment', 'GuestController@postCommentOnProduct')->name('product.comment');
     Route::post('add-to-cart', 'GuestController@postAddToCart')->name('add-to-cart');
     Route::post('checkout', 'GuestController@postCheckout')->name('checkout');
 

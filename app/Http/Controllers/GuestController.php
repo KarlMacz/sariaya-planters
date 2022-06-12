@@ -15,6 +15,10 @@ use App\Order;
 use App\OrderItem;
 use App\OrderLog;
 use App\Product;
+use App\ProductComment;
+use App\PhBarangay;
+use App\PhMunicipality;
+use App\PhProvince;
 
 class GuestController extends Controller
 {
@@ -31,15 +35,25 @@ class GuestController extends Controller
     {
         $search_for = $request->input('search_for', '');
 
-        $products = Product::where('is_displayed', true)
-            ->where('quantity', '>', 0)
-            ->where('name', 'LIKE', '%' . $search_for . '%')
-            ->orWhereHas('seller', function(Builder $query) use ($search_for) {
-                $query->Where('store_name', 'LIKE', '%' . $search_for . '%');
-            })
-            ->get();
+        if($search_for != '') {
+            $products = Product::where('is_displayed', true)
+                ->where('quantity', '>', 0)
+                ->where('name', 'LIKE', '%' . $search_for . '%')
+                ->orWhereHas('seller', function(Builder $query) use ($search_for) {
+                    $query->where('store_name', 'LIKE', '%' . $search_for . '%')
+                        ->orWhere('first_name', 'LIKE', '%' . $search_for . '%')
+                        ->orWhere('last_name', 'LIKE', '%' . $search_for . '%')
+                        ->orWhere(DB::raw('CONCAT(`first_name`, " ", `last_name`)'), 'LIKE', '%' . $search_for . '%');
+                })
+                ->get();
+        } else {
+            $products = Product::where('is_displayed', true)
+                ->where('quantity', '>', 0)
+                ->get();
+        }
 
         return view('guest.shop', [
+            'search_for' => $search_for,
             'cart' => $this->getCart(),
             'products' => $products
         ]);
@@ -86,6 +100,24 @@ class GuestController extends Controller
         ]);
     }
 
+    public function showProfile()
+    {
+        if(!Auth::check()) {
+            return redirect()->route('auth.login');
+        }
+
+        $provinces = PhProvince::orderBy('name')->get();
+        $municipalities = PhMunicipality::orderBy('name')->get();
+        $barangays = PhBarangay::orderBy('name')->get();
+
+        return view('guest.profile', [
+            'cart' => $this->getCart(),
+            'provinces' => $provinces,
+            'municipalities' => $municipalities,
+            'barangays' => $barangays
+        ]);
+    }
+
     public function postAddToCart(Request $request)
     {
         $id = base64_decode($request->input('id'));
@@ -124,6 +156,35 @@ class GuestController extends Controller
             } else {
                 $this->flashPrompt('error', 'Failed to update product in the cart.');
             }
+        }
+
+        return redirect()->back();
+    }
+
+    public function postCommentOnProduct($id, Request $request)
+    {
+        $id = base64_decode($id);
+        $comment = $request->input('comment', null);
+        $rating = $request->input('rating');
+
+        $product = Product::where('id', $id)
+            ->first();
+
+        if($product != null) {
+            $product_comment = new ProductComment;
+
+            $product_comment->product_id = $id;
+            $product_comment->user_id = Auth::user()->id;
+            $product_comment->comment = $comment;
+            $product_comment->rating = $rating;
+
+            if($product_comment->save()) {
+                $this->flashPrompt('ok', 'Product comment has been posted.');
+            } else {
+                $this->flashPrompt('error', 'Failed to post product comment.');
+            }
+        } else {
+            $this->flashPrompt('error', 'Product doesn\'t exist.');
         }
 
         return redirect()->back();

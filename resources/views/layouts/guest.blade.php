@@ -53,7 +53,7 @@
             <a class="dropdown-item" href="{{ route('guest.transaction-history') }}">Transaction History</a>
             <a class="dropdown-item" href="{{ route('hub.orders') }}">Seller's Hub</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Change Password</a>
+              <a class="dropdown-item" href="{{ route('guest.profile') }}">Profile</a>
               <a class="dropdown-item logout-button" href="#">Log Out</a>
             </div>
           </li>

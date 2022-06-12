@@ -44,7 +44,7 @@
             <div class="row">
               <div class="col-sm">
                 <div class="form-group">
-                  <input type="text" name="search_for" class="form-control" placeholder="Search for..." required>
+                  <input type="text" name="search_for" class="form-control" placeholder="Search for..." value="{{ $search_for ?? '' }}">
                 </div>
               </div>
               <div class="col-sm-auto">
@@ -66,15 +66,30 @@
                   <img src="{{ asset('assets/img/img_default.jpeg') }}" class="img-thumbnail">
                   <h5 class="card-title m-0">{{ $product->name }}</h5>
                   <h4 class="text-success mt-auto mb-0">&#8369; {{ number_format(($product->discounted_price != null ? $product->discounted_price : $product->price), 2) }}</h4>
-                  @if($product->discounted_price != null)
-                    <h6 class="m-0">
+                  <h6 class="m-0">
+                    @if($product->discounted_price != null)
                       <s class="text-muted">&#8369; {{ number_format($product->price, 2) }}</s>
                       <span class="ml-2">{{ $product->discount }}%</span>
-                    </h6>
-                  @endif
-                  <h6 class="mt-4 mb-0">
-                    <small>Seller: {{ $product->seller->store_name ?? '' }}</small>
+                    @else
+                      <span>&nbsp;</span>
+                    @endif
                   </h6>
+                  <h6 class="mt-2 mb-0">
+                    <small>Seller: {{ $product->seller->store_name != null && $product->seller->store_name != '' ? $product->seller->store_name : ($product->seller->first_name . ' ' . $product->seller->last_name) }}</small>
+                  </h6>
+                  @if($product->rating > 0)
+                    <div class="d-flex align-items-center mt-2">
+                      <div class="rating">
+                        @for($i = 0; $i < $product->rating; $i++)
+                          <span class="colored">☆</span>
+                        @endfor
+                      </div>
+                    </div>
+                  @else
+                    <div class="mt-2">
+                      <em class="text-muted">No rating</em>
+                    </div>
+                  @endif
                 </div>
               </a>
             </div>
