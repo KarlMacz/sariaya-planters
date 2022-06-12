@@ -28,7 +28,18 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav w-100">
+          <li class="nav-item mr-auto">
+            <a class="nav-link" href="{{ route('guest.shop') }}">Shop Now</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle no-caret" data-toggle="dropdown">
+              <span class="fa-solid fa-bell fa-fw"></span>
+            </a>
+            <div id="notifications" class="dropdown-menu dropdown-menu-right" style="width: 20rem;">
+              <div></div>
+            </div>
+          </li>
           <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
               {{ Auth::user()->full_name }}
@@ -75,7 +86,45 @@
       $('.loader').fadeOut(200);
     }
 
+    function fetchNotifications() {
+      $.ajax({
+        url: "{{ route('api.fetch.notifications') }}",
+        method: 'POST',
+        data: {
+          id: '{{ base64_encode(Auth::user()->id) }}'
+        },
+        dataType: 'json',
+        success: function(response) {
+          if(response.status == 'ok') {
+            $('#notifications').html(`<div class="py-2 px-3">
+                <span>Pending Order${response.data.pending_orders_count == 1 ? '' : 's'}:</span>
+                <strong class="float-right">x${response.data.pending_orders_count}</strong>
+              </div>
+              <div class="dropdown-divider m-0"></div>
+              <div class="py-2 px-3">
+                <span>Processing Order${response.data.processing_orders_count == 1 ? '' : 's'}:</span>
+                <strong class="float-right">x${response.data.processing_orders_count}</strong>
+              </div>
+              <div class="dropdown-divider m-0"></div>
+              <div class="py-2 px-3">
+                <span>Delivering Order${response.data.delivering_orders_count == 1 ? '' : 's'}:</span>
+                <strong class="float-right">x${response.data.delivering_orders_count}</strong>
+              </div>
+              <div class="dropdown-divider m-0"></div>
+              <div class="py-2 px-3">
+                <span>Completed Order${response.data.completed_orders_count == 1 ? '' : 's'}:</span>
+                <strong class="float-right">x${response.data.completed_orders_count}</strong>
+              </div>`);
+          }
+        }
+      });
+    }
+
     $(function() {
+      fetchNotifications();
+
+      setInterval(fetchNotifications, 5000);
+
       $('[data-toggle="tooltip"]').tooltip();
 
       $('body').on('click', '.logout-button', function() {

@@ -18,4 +18,5 @@ Route::middleware('api')->name('api.')->group(function() {
     Route::post('fetch/province', 'ApiController@fetchProvinces')->name('fetch.province');
     Route::post('fetch/municipality', 'ApiController@fetchMunicipalities')->name('fetch.municipality');
     Route::post('fetch/barangay', 'ApiController@fetchBarangays')->name('fetch.barangay');
+    Route::post('fetch/notifications', 'ApiController@fetchNotifications')->name('fetch.notifications');
 });

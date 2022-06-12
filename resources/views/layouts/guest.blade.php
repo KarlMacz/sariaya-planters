@@ -28,7 +28,10 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav w-100">
+          <li class="nav-item mr-auto">
+            <a class="nav-link" href="{{ route('guest.shop') }}">Shop Now</a>
+          </li>
           @if(Auth::check())
           <li class="nav-item">
             <a class="nav-link" href="{{ route('guest.cart') }}">
@@ -40,25 +43,20 @@
               </div>
             </a>
           </li>
-          @endif
-          <li class="nav-item active">
-            <a class="nav-link" href="{{ route('guest.shop') }}">Shop Now</a>
-          </li>
-          @if(Auth::check())
           <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
               {{ Auth::user()->full_name }}
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="{{ route('guest.transaction-history') }}">Transaction History</a>
-            <a class="dropdown-item" href="{{ route('hub.orders') }}">Seller's Hub</a>
+              <a class="dropdown-item" href="{{ route('guest.transaction-history') }}">Transaction History</a>
+              <a class="dropdown-item" href="{{ route('hub.orders') }}">Seller's Hub</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{{ route('guest.profile') }}">Profile</a>
               <a class="dropdown-item logout-button" href="#">Log Out</a>
             </div>
           </li>
           @else
-          <li class="nav-item active">
+          <li class="nav-item">
             <a class="nav-link" href="{{ route('auth.login') }}">Log In</a>
           </li>
           @endif
