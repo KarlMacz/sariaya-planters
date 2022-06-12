@@ -108,7 +108,7 @@
           <h6 class="m-0">Seller:</h6>
           <h4 class="mt-0 mb-{{ $product->description != null && $product->description != '' ? '4' : '0' }}">{{ $product->seller->store_name ?? '' }}</h4>
           @if($product->description != null && $product->description != '')
-            <h6 class="m-0">Description:</h6>
+            <h6 class="m-0">Product Description:</h6>
             <div>{!! nl2br(trim($product->description)) !!}</div>
           @endif
         </div>
