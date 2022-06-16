@@ -27,6 +27,7 @@ Route::name('auth.')->group(function() {
 Route::name('guest.')->group(function() {
     Route::get('/', 'GuestController@showIndex')->name('index');
     Route::get('shop', 'GuestController@showShop')->name('shop');
+    Route::get('messages', 'GuestController@showMessages')->name('messages');
     Route::get('product/{id}', 'GuestController@showProduct')->name('product');
     Route::get('cart', 'GuestController@showCart')->name('cart');
     Route::get('transaction-history', 'GuestController@showTransactionHistory')->name('transaction-history');

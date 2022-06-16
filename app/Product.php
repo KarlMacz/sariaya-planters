@@ -50,9 +50,9 @@ class Product extends Model
         return $this->hasMany('App\ProductImage', 'product_id');
     }
 
-    public function orders()
+    public function orderItems()
     {
-        return $this->belongsTo('App\Order', 'product_id');
+        return $this->hasMany('App\OrderItem', 'product_id');
     }
 
     public function carts()

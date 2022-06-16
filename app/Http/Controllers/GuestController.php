@@ -31,6 +31,50 @@ class GuestController extends Controller
         ]);
     }
 
+    public function showMessages()
+    {
+        $id = Auth::check() ? Auth::user()->id : null;
+
+        if($id == null) {
+            return redirect()->back();
+        }
+
+        $orders = Order::whereHas('items', function(Builder $query1) use ($id) {
+                $query1->whereHas('product', function(Builder $query2) use ($id) {
+                    $query2->where('seller_id', $id);
+                });
+            })
+            ->orWhere('buyer_id', $id)
+            ->whereIn('status', ['PROCESSING', 'DELIVERING'])
+            ->get();
+        $recepient = collect([]);
+
+        foreach($orders as $order) {
+            if($order->buyer_id == $id) {
+                foreach($order->items as $order_item) {
+                    if(!$recepient->contains($order_item->product->seller)) {
+                        $usr = $order_item->product->seller;
+
+                        $usr->recepient_type = 'seller';
+
+                        $recepient->push($usr);
+                    }
+                }
+            } else {
+                $usr = $order->buyer;
+
+                $usr->recepient_type = 'buyer';
+
+                $recepient->push($usr);
+            }
+        }
+
+        return view('guest.messages', [
+            'cart' => $this->getCart(),
+            'recepient' => $recepient
+        ]);
+    }
+
     public function showShop(Request $request)
     {
         $search_for = $request->input('search_for', '');

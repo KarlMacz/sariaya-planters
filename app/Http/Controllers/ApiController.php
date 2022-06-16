@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 
 use App\Http\Traits\Utilities;
 
+use App\Message;
+use App\Order;
 use App\PhBarangay;
 use App\PhMunicipality;
 use App\PhProvince;
-use App\Order;
+use App\User;
 
 class ApiController extends Controller
 {
@@ -88,6 +90,58 @@ class ApiController extends Controller
             'delivering_orders_count' => $delivering_orders->count(),
             'completed_orders_count' => $completed_orders->count()
         ];
+
+        return response()->json($this->response);
+    }
+
+    public function fetchMessages(Request $request)
+    {
+        $sent_by = base64_decode($request->input('sent_by'));
+        $sent_to = base64_decode($request->input('sent_to'));
+
+        $user = User::where('id', $sent_by)
+            ->orWhere('id', $sent_to)
+            ->first();
+        $messages = Message::where(function($query) use ($sent_by, $sent_to) {
+                $query->where('sent_by', $sent_by)
+                    ->where('sent_to', $sent_to);
+            })
+            ->orWhere(function($query) use ($sent_by, $sent_to) {
+                $query->where('sent_by', $sent_to)
+                    ->where('sent_to', $sent_by);
+            })
+            ->orderBy('created_at')
+            ->get();
+
+        $this->response['status'] = 'ok';
+        $this->response['message'] = $messages->count() . ' record(s) retrieved.';
+        $this->response['data'] = [
+            'user' => $user,
+            'messages' => $messages
+        ];
+
+        return response()->json($this->response);
+    }
+
+    public function sendMessage(Request $request)
+    {
+        $sent_by = base64_decode($request->input('sent_by'));
+        $sent_to = base64_decode($request->input('sent_to'));
+        $message = $request->input('message');
+
+        $messaging = new Message;
+
+        $messaging->sent_by = $sent_by;
+        $messaging->sent_to = $sent_to;
+        $messaging->message = $message;
+
+        if($messaging->save()) {
+            $this->response['status'] = 'ok';
+            $this->response['message'] = 'Message sent.';
+        } else {
+            $this->response['status'] = 'error';
+            $this->response['message'] = 'Failed to send message.';
+        }
 
         return response()->json($this->response);
     }

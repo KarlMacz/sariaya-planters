@@ -43,6 +43,13 @@
               </div>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('guest.messages') }}">
+              <div class="position-relative">
+                <span class="fa-solid fa-comments fa-fw"></span>
+              </div>
+            </a>
+          </li>
           <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
               {{ Auth::user()->full_name }}
